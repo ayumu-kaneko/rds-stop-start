@@ -1,0 +1,36 @@
+service: rds-stop-start
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 128
+  timeout: 120
+  region: us-east-1
+  stage: ${opt:stage, 'develop'}
+  environment:
+    Environment: ${self:provider.stage}
+custom:
+  stage:
+    develop:
+      RdsInstanceName: mydbinstance
+      IAMRoleForLambda: arn:aws:iam::123456789012:role/RdsStopStartLambda
+      # UTC(PM 9:00 JST)
+      StopSchedule: cron(0 12 * * ? *)
+      # UTC(AM 9:00 JST)
+      StartSchedule: cron(0 0 * * ? *)
+
+functions:
+  StopRdsInstance:
+    handler: RdsStopStart.stop
+    role: ${self:custom.stage.${self:provider.stage}.IAMRoleForLambda}
+    environment:
+      RdsInstanceName: ${self:custom.stage.${self:provider.stage}.RdsInstanceName}
+    events:
+      - schedule: ${self:custom.stage.${self:provider.stage}.StopSchedule}
+
+  StartRdsInstance:
+    handler: RdsStopStart.start
+    role: ${self:custom.stage.${self:provider.stage}.IAMRoleForLambda}
+    environment:
+      RdsInstanceName: ${self:custom.stage.${self:provider.stage}.RdsInstanceName}
+    events:
+      - schedule: ${self:custom.stage.${self:provider.stage}.StartSchedule}
