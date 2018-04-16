@@ -1,0 +1,34 @@
+{
+  "name": "rds-stop-start",
+  "version": "1.0.0",
+  "description": "RDSを日次で停止、起動するためのLambdaをServerless Frameworkで実装してみました。",
+  "main": "RdsStopStart.js",
+  "scripts": {
+    "test": "mocha --require babel-core/register tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayumu-kaneko/rds-stop-start.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ayumu-kaneko/rds-stop-start/issues"
+  },
+  "homepage": "https://github.com/ayumu-kaneko/rds-stop-start#readme",
+  "dependencies": {
+    "co": "^4.6.0",
+    "thunkify": "^2.1.2"
+  },
+  "devDependencies": {
+    "aws-sdk-mock": "^1.7.0",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "chai": "^4.1.2",
+    "mocha": "^5.1.0",
+    "path": "^0.12.7"
+  }
+}
